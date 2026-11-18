@@ -42,8 +42,6 @@ jobs:
           distribution: "temurin"
           java-version: "17"
 
-      - uses: android-actions/setup-android@v3
-
       - name: Build Web & Android APK
         run: |
           npm install --legacy-peer-deps
@@ -52,6 +50,7 @@ jobs:
           npx cap init "Sarfealam Auto-Studio" "com.sarfealam.autostudio" --web-dir dist || true
           npx cap add android || true
           npx cap sync android
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
